@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -44,11 +43,17 @@ namespace Shop.Controllers
             [FromBody] User model
         )
         {
+            // Única maneira que eu encontrei de forçar case sensitive na query, foi usando Collate com essa string
+            // https://docs.microsoft.com/en-us/ef/core/miscellaneous/collations-and-case-sensitivity
             var user = await context.Users
                 .AsNoTracking()
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
+                .Where(
+                    x =>
+                    EF.Functions.Collate(x.Username, "SQL_Latin1_General_CP1_CS_AS") == model.Username
+                    &&
+                    EF.Functions.Collate(x.Password, "SQL_Latin1_General_CP1_CS_AS") == model.Password
+                )
                 .FirstOrDefaultAsync();
-
             if (user == null)
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
