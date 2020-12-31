@@ -5,15 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Models;
+using Microsoft.AspNetCore.Authorization;
 
-namespace shop.Controllers
+namespace Shop.Controllers
 {
     [Route("products")]
     public class ProductController : ControllerBase
     {
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<Product>>> Get([FromServices] DataContext context)
+        [AllowAnonymous]
+        public async Task<ActionResult<List<Product>>> Get(
+            [FromServices] DataContext context
+        )
         {
             var products = await context
                 .Products
@@ -26,6 +30,7 @@ namespace shop.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Product>> Get(
             int id,
             [FromServices] DataContext context)
@@ -41,6 +46,7 @@ namespace shop.Controllers
 
         [HttpGet]
         [Route("categories/{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Product>>> getByCategory(
             int id,
             [FromServices] DataContext context
@@ -58,6 +64,7 @@ namespace shop.Controllers
 
         [HttpPost]
         [Route("")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Product>> Post(
             [FromServices] DataContext context,
             [FromBody] Product model

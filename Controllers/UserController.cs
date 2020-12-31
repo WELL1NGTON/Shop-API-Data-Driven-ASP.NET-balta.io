@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -10,12 +11,29 @@ using Shop.Services;
 
 namespace Shop.Controllers
 {
-    [Route("v1/users")]
+    [Route("users")]
     public class UserController : Controller
     {
+
+        [HttpGet]
+        [Route("")]
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<User>>> Get(
+            [FromServices] DataContext context
+        )
+        {
+            var users = await context
+                .Users
+                .AsNoTracking()
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
+        // [Authorize(Roles = "manager")]
         public async Task<ActionResult<User>> Post(
             [FromServices] DataContext context,
             [FromBody] User model)
@@ -27,6 +45,35 @@ namespace Shop.Controllers
             try
             {
                 context.Users.Add(model);
+                await context.SaveChangesAsync();
+                return model;
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Não foi possível criar o usuário" });
+            }
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<User>> Put(
+            [FromServices] DataContext context,
+            int id,
+            [FromBody] User model
+        )
+        {
+            // Verifica se os dados são válidos
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Verifica se o ID informado é o mesmo do modelo
+            if (id != model.Id)
+                return NotFound(new { message = "Usuário não encontrado" });
+
+            try
+            {
+                context.Entry(model).State = EntityState.Modified;
                 await context.SaveChangesAsync();
                 return model;
             }
