@@ -4,23 +4,20 @@
 
 Curso Backend de Nível Básico para criação de APIs utilizando <span>ASP</span>.NET e C#. 
 
-
 Link do curso: [https://balta.io/cursos/criando-apis-data-driven-com-aspnet-core-3-e-ef-core-3](https://balta.io/cursos/criando-apis-data-driven-com-aspnet-core-3-e-ef-core-3)
 
-
 Tecnologias:  
-<img style="background-color:#ffffff" src=https://simpleicons.org/icons/dot-net.svg height=30 width=30/>
-<img src=https://simpleicons.org/icons/csharp.svg height=30 width=30/>
+<img style="background-color:#ffffff" src=https://simpleicons.org/icons/dotnet.svg height=30 width=30/> <img src=https://simpleicons.org/icons/csharp.svg height=30 width=30/>
 
-# Criando API Data Driven com ASP.NET Core 3 e EF Core 3
+## Criando API Data Driven com ASP.NET Core 3 e EF Core 3
 
 Criar uma API voltada para CRUD de forma simples e rápida.
 
-# Instrutor
+## Instrutor
 
 André Baltieri - 8x Microsoft MVP
 
-# Progresso do curso (3.5 horas)
+## Progresso do curso (3.5 horas)
 
 - [x] Apresentação (1 min)
 - [x] Instalação (12 min)
@@ -66,3 +63,5 @@ André Baltieri - 8x Microsoft MVP
 - [x] Publicando a API (3 min)
 - [x] Conectando ao SQL Server (7 min)
 - [x] Finalização (1 min)
+
+[![certificado](images/criando_api_data_driven_com_aspnet_core_3_e_ef_core_3.jpg)](https://balta.io/certificados/09cfbe97-add0-40c9-933b-9fc03233d225)
